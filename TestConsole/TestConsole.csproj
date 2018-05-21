@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\QRCoder.Standard\QRCoder.Standard.csproj" />
     <ProjectReference Include="..\stellar-dotnetcore-sdk\stellar-dotnetcore-sdk.csproj" />
   </ItemGroup>
 

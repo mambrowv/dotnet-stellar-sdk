@@ -3,7 +3,6 @@ using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using stellar_dotnetcore_sdk;
-using sdkxdr = stellar_dotnetcore_sdk.xdr;
 
 
 namespace stellar_dotnetcore_unittest

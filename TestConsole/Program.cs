@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Threading.Tasks;
+using QRCoder;
 using stellar_dotnetcore_sdk;
 using stellar_dotnetcore_sdk.requests;
 using stellar_dotnetcore_sdk.responses;
@@ -16,20 +18,35 @@ namespace TestConsole
 
         public static async Task Main(string[] args)
         {
-            Network.UseTestNetwork();
-            var server = new Server("https://horizon-testnet.stellar.org");
+            // GAZHWW2NBPDVJ6PEEOZ2X43QV5JUDYS3XN4OWOTBR6WUACTUML2CCJLI
 
-            await GetLedgerTransactions(server);
-            await ShowAccountTransactions(server);
 
-            //Streams are Maybe fixed? in this API until a resolution is found for the HttpClient issue
-            Console.WriteLine("-- Streaming All New Operations On The Network --");
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode("GAZHWW2NBPDVJ6PEEOZ2X43QV5JUDYS3XN4OWOTBR6WUACTUML2CCJLI", QRCodeGenerator.ECCLevel.Q);
+            QRCode qrCode = new QRCode(qrCodeData);
 
-            server.Operations
-                .Cursor("now")
-                .Order(OrderDirection.ASC)
-                .Stream((sender, response) => { ShowOperationResponse(response); })
-                .Connect();
+            //Bitmap qrCodeImage = qrCode.GetGraphic(20);
+            //qrCodeImage.Save("Test.png");
+
+            AsciiQRCode qrCodeAcsii = new AsciiQRCode(qrCodeData);
+
+            Console.WriteLine("");
+            Console.WriteLine(qrCodeAcsii.GetGraphic(1));
+
+            //Network.UseTestNetwork();
+            //var server = new Server("https://horizon-testnet.stellar.org");
+
+            //await GetLedgerTransactions(server);
+            //await ShowAccountTransactions(server);
+
+            ////Streams are Maybe fixed? in this API until a resolution is found for the HttpClient issue
+            //Console.WriteLine("-- Streaming All New Operations On The Network --");
+
+            //server.Operations
+            //    .Cursor("now")
+            //    .Order(OrderDirection.ASC)
+            //    .Stream((sender, response) => { ShowOperationResponse(response); })
+            //    .Connect();
 
             Console.ReadLine();
         }
